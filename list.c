@@ -75,8 +75,22 @@ void * lastList(List * list)
   return list->current->data;
 }
 
-void * prevList(List * list) {
+void * prevList(List * list) 
+{
+  if (list->head != NULL || list->current == list->head)
+  {
     return NULL;
+  }
+  Node *nodoPrev = list->head;
+
+  if(list->current == NULL)return NULL;
+
+  while(nodoPrev->next != list->current)
+    {
+      nodoPrev = nodoPrev->next;
+    }
+  list->current = nodoPrev;
+  return nodoPrev->data;
 }
 
 void pushFront(List * list, void * data) {
