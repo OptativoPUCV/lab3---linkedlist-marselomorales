@@ -64,14 +64,14 @@ void * nextList(List * list)
 
 void * lastList(List * list) 
 {
-  if (list->head != NULL)
+  if (list->head == NULL)
   {
     return NULL;
   }
   while (list->current->next != NULL)
-    {
-      list->current = list->current->next;
-    }
+  {
+    list->current = list->current->next;
+  }
   return list->current->data;
 }
 
@@ -86,9 +86,9 @@ void * prevList(List * list)
   if(list->current == NULL)return NULL;
 
   while(nodoPrev->next != list->current)
-    {
-      nodoPrev = nodoPrev->next;
-    }
+  {
+     nodoPrev = nodoPrev->next;
+  }
   list->current = nodoPrev;
   return nodoPrev->data;
 }
