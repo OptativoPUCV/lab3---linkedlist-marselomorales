@@ -52,3 +52,14 @@ Wed 27 Mar 2024 09:05:43 PM UTC:
  tests:  10|2
 total_score: 45/70
 af74a5e
+Thu 28 Mar 2024 11:42:51 PM UTC: 
+ list.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+In file included from test.c:5:
+list.c: In function ‘pushBack’:
+list.c:115:9: error: unused variable ‘nodonuevo’ [-Werror=unused-variable]
+  115 |   Node *nodonuevo = (Node *)(malloc(sizeof(Node)));
+      |         ^~~~~~~~~
+cc1: all warnings being treated as errors
+Compilation failed
+eead3ea
