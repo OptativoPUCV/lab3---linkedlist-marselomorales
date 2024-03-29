@@ -176,6 +176,9 @@ void * popCurrent(List * list) {
     } else {
         // Si el nodo actual es la cabeza de la lista
         list->head = currentNode->next;
+        if (list->head != NULL) {
+            list->head->prev = NULL;
+        }
     }
 
     if (currentNode->next != NULL) {
@@ -183,6 +186,9 @@ void * popCurrent(List * list) {
     } else {
         // Si el nodo actual es la cola de la lista
         list->tail = currentNode->prev;
+        if (list->tail != NULL) {
+            list->tail->next = NULL;
+        }
     }
 
     // Liberar la memoria del nodo actual
@@ -191,6 +197,7 @@ void * popCurrent(List * list) {
     // Devolver el dato del nodo eliminado
     return data;
 }
+
 
 
 void cleanList(List * list) {
