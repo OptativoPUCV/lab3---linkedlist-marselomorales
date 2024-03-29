@@ -95,21 +95,22 @@ void * prevList(List * list)
 
 void pushFront(List * list, void * data) 
 {
-  Node *nodonuevo = (Node *)(malloc(sizeof(Node)));
-  nodonuevo->prev = NULL;
-  nodonuevo->data = data;
-  nodonuevo->next = list->head;
-  if (list->head != NULL)
-  {
-    list->head->prev = nodonuevo;
-  }
-  else
-  {
-    // Si la lista estaba vacía, el nuevo nodo es tanto la cabeza como la cola
-    list->tail = nodonuevo;
-  }
-  list->head = nodonuevo;
+    Node *newNode = (Node *)(malloc(sizeof(Node)));
+    newNode->data = data;
+    newNode->prev = NULL;
+    newNode->next = list->head;
+
+    if (list->head != NULL) {
+        list->head->prev = newNode;
+    }
+
+    list->head = newNode;
+
+    if (list->tail == NULL) {
+        list->tail = newNode;
+    }
 }
+
 
 
 void pushBack(List * list, void * data) 

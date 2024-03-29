@@ -107,3 +107,14 @@ list.c:117:9: error: unused variable ‘nodonuevo’ [-Werror=unused-variable]
 cc1: all warnings being treated as errors
 Compilation failed
 33b91c4
+Fri 29 Mar 2024 12:38:45 AM UTC: 
+ list.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+In file included from test.c:5:
+list.c: In function ‘pushBack’:
+list.c:118:9: error: unused variable ‘nodonuevo’ [-Werror=unused-variable]
+  118 |   Node *nodonuevo = (Node *)(malloc(sizeof(Node)));
+      |         ^~~~~~~~~
+cc1: all warnings being treated as errors
+Compilation failed
+9f4b51e
