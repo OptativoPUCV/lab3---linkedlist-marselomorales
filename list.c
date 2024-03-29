@@ -113,6 +113,7 @@ void pushFront(List * list, void * data)
 
 
 
+
 void pushBack(List * list, void * data) 
 {
   Node *nodonuevo = (Node *)(malloc(sizeof(Node)));
@@ -128,19 +129,20 @@ void pushCurrent(List * list, void * data)
         return;
     }
 
-    Node *nodonuevo = (Node *)malloc(sizeof(Node));
-    nodonuevo->data = data;
-    nodonuevo->next = list->current->next;
-    nodonuevo->prev = list->current;
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = list->current->next;
+    newNode->prev = list->current;
 
     if (list->current->next != NULL) {
-        list->current->next->prev = nodonuevo;
+        list->current->next->prev = newNode;
     } else {
-        list->tail = nodonuevo;
+        list->tail = newNode;
     }
 
-    list->current->next = nodonuevo;
+    list->current->next = newNode;
 }
+
 
 
 void * popFront(List * list) {
@@ -154,28 +156,22 @@ void * popBack(List * list) {
 }
 
 void * popCurrent(List * list) {
-    // Verificar si la lista está vacía o si no hay un nodo actual
     if (list == NULL || list->current == NULL)
         return NULL;
 
-    // Guardar el dato del nodo actual
     void *data = list->current->data;
 
-    // Guardar una referencia al nodo actual
     Node *currentNode = list->current;
 
-    // Avanzar el current al siguiente nodo
     if (list->current->next != NULL) {
         list->current = list->current->next;
     } else {
         list->current = NULL;
     }
 
-    // Actualizar los punteros prev y next de los nodos vecinos
     if (currentNode->prev != NULL) {
         currentNode->prev->next = currentNode->next;
     } else {
-        // Si el nodo actual es la cabeza de la lista
         list->head = currentNode->next;
         if (list->head != NULL) {
             list->head->prev = NULL;
@@ -185,19 +181,17 @@ void * popCurrent(List * list) {
     if (currentNode->next != NULL) {
         currentNode->next->prev = currentNode->prev;
     } else {
-        // Si el nodo actual es la cola de la lista
         list->tail = currentNode->prev;
         if (list->tail != NULL) {
             list->tail->next = NULL;
         }
     }
 
-    // Liberar la memoria del nodo actual
     free(currentNode);
 
-    // Devolver el dato del nodo eliminado
     return data;
 }
+
 
 
 
