@@ -103,12 +103,14 @@ void pushFront(List * list, void * data)
   {
     list->head->prev = nodonuevo;
   }
-  list->head = nodonuevo;
-  if (list->tail == NULL)
+  else
   {
+    // Si la lista estaba vacía, el nuevo nodo es tanto la cabeza como la cola
     list->tail = nodonuevo;
   }
+  list->head = nodonuevo;
 }
+
 
 void pushBack(List * list, void * data) 
 {
