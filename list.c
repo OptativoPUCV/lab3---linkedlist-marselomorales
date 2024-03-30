@@ -34,7 +34,7 @@ List * createList()
   list->head = NULL;
   list->tail = NULL;
   list->current = NULL;
-  
+
   return list;
 }
 
@@ -116,56 +116,39 @@ void pushFront(List * list, void * data)
 
 void pushBack(List * list, void * data) 
 {
-  Node *newNode = (Node *)(malloc(sizeof(Node)));
-  
-  list->current = list->tail;
-  pushCurrent(list,data);  
+    if (list == NULL)
+        return;
+
+    if (list->tail == NULL) {
+        pushFront(list, data); // Si la lista está vacía, agregamos al principio
+        return;
+    }
+
+    Node *newNode = createNode(data);
+    list->tail->next = newNode;
+    newNode->prev = list->tail;
+    list->tail = newNode;
 }
 
 void pushCurrent(List * list, void * data) 
 {
-    if (list == NULL)
+    if (list->current == NULL) {
+        pushFront(list, data);
         return;
-
-    if (list->current == NULL || list->tail == list->current) {
-        pushBack(list, data); // Si el current es NULL o apunta al último nodo, agregamos al final
-    } else {
-        Node *newNode = createNode(data);
-        newNode->next = list->current->next;
-        newNode->prev = list->current;
-
-        if (list->current->next != NULL) {
-            list->current->next->prev = newNode;
-        } else {
-            list->tail = newNode; // Si el current es el nodo anterior al último, actualizamos la cola
-        }
-
-        list->current->next = newNode;
-    }
-}
-
-void * popCurrent(List * list) {
-    if (list == NULL || list->current == NULL)
-        return NULL;
-
-    void *data = list->current->data;
-    Node *currentNode = list->current;
-
-    if (currentNode->prev != NULL) {
-        currentNode->prev->next = currentNode->next;
-    } else {
-        list->head = currentNode->next; 
     }
 
-    if (currentNode->next != NULL) {
-        currentNode->next->prev = currentNode->prev;
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = list->current->next;
+    newNode->prev = list->current;
+
+    if (list->current->next != NULL) {
+        list->current->next->prev = newNode;
     } else {
-        list->tail = currentNode->prev; 
+        list->tail = newNode;
     }
 
-    list->current = currentNode->next; 
-    free(currentNode);
-    return data;
+    list->current->next = newNode;
 }
 
 
@@ -190,19 +173,22 @@ void * popCurrent(List * list) {
     if (currentNode->prev != NULL) {
         currentNode->prev->next = currentNode->next;
     } else {
-        list->head = currentNode->next; 
+        list->head = currentNode->next; // Si el current es la cabeza, actualizamos la cabeza
     }
 
     if (currentNode->next != NULL) {
         currentNode->next->prev = currentNode->prev;
     } else {
-        list->tail = currentNode->prev; 
+        list->tail = currentNode->prev; // Si el current es la cola, actualizamos la cola
     }
 
-    list->current = currentNode->next; 
+    list->current = currentNode->next; // Actualizamos el current
     free(currentNode);
     return data;
 }
+
+
+
 
 void cleanList(List * list) {
     while (list->head != NULL) {

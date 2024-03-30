@@ -220,3 +220,9 @@ list.c:147:8: note: previous definition of ‘popCurrent’ with type ‘void *(
 cc1: all warnings being treated as errors
 Compilation failed
 959e621
+Sat 30 Mar 2024 04:38:47 PM UTC: 
+ list.c | 57 ++++++++++++++++++++-------------------------------------
+ 1 file changed, 20 insertions(+), 37 deletions(-)
+ tests:  12|0
+total_score: 70/70
+1cce8e2
