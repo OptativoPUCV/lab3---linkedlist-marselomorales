@@ -125,22 +125,26 @@ void pushBack(List * list, void * data)
 void pushCurrent(List * list, void * data) 
 {
     if (list->current == NULL) {
-        pushFront(list, data);
-        return;
-    }
-
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->data = data;
-    newNode->next = list->current->next;
-    newNode->prev = list->current;
-
-    if (list->current->next != NULL) {
-        list->current->next->prev = newNode;
+        if (list->head == NULL) {
+            pushFront(list, data); // Si la lista está vacía, agregamos el nuevo nodo como el único nodo en la lista
+        } else {
+            list->current = list->tail; // Si el nodo actual es NULL, pero la lista no está vacía, movemos el nodo actual al último nodo
+            pushBack(list, data); // y luego agregamos el nuevo nodo como el siguiente al último nodo
+        }
     } else {
-        list->tail = newNode; 
-    }
+        Node *newNode = (Node *)malloc(sizeof(Node));
+        newNode->data = data;
+        newNode->next = list->current->next;
+        newNode->prev = list->current;
 
-    list->current->next = newNode;
+        if (list->current->next != NULL) {
+            list->current->next->prev = newNode;
+        } else {
+            list->tail = newNode; // Si el nodo actual es el último nodo, actualizamos la cola de la lista
+        }
+
+        list->current->next = newNode;
+    }
 }
 
 
@@ -165,7 +169,7 @@ void * popCurrent(List * list) {
     if (currentNode->prev != NULL) {
         currentNode->prev->next = currentNode->next;
     } else {
-        list->head = currentNode->next;
+        list->head = currentNode->next; // Si el nodo actual es la cabeza, actualizamos la cabeza de la lista
         if (list->head != NULL) {
             list->head->prev = NULL;
         }
@@ -174,7 +178,10 @@ void * popCurrent(List * list) {
     if (currentNode->next != NULL) {
         currentNode->next->prev = currentNode->prev;
     } else {
-        list->tail = currentNode->prev; // Actualizamos la cola si el nodo actual es el último nodo
+        list->tail = currentNode->prev; // Si el nodo actual es la cola, actualizamos la cola de la lista
+        if (list->tail != NULL) {
+            list->tail->next = NULL;
+        }
     }
 
     list->current = currentNode->next; // Actualizamos el nodo actual
@@ -183,10 +190,6 @@ void * popCurrent(List * list) {
 
     return data;
 }
-
-
-
-
 
 void cleanList(List * list) {
     while (list->head != NULL) {
