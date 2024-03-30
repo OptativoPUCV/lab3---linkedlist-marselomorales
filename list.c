@@ -124,24 +124,50 @@ void pushBack(List * list, void * data)
 
 void pushCurrent(List * list, void * data) 
 {
-    if (list->current == NULL) {
-        pushFront(list, data);
+    if (list == NULL)
         return;
-    }
 
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->data = data;
-    newNode->next = list->current->next;
-    newNode->prev = list->current;
-
-    if (list->current->next != NULL) {
-        list->current->next->prev = newNode;
+    if (list->current == NULL || list->tail == list->current) {
+        pushBack(list, data); // Si el current es NULL o apunta al último nodo, agregamos al final
     } else {
-        list->tail = newNode;
+        Node *newNode = createNode(data);
+        newNode->next = list->current->next;
+        newNode->prev = list->current;
+
+        if (list->current->next != NULL) {
+            list->current->next->prev = newNode;
+        } else {
+            list->tail = newNode; // Si el current es el nodo anterior al último, actualizamos la cola
+        }
+
+        list->current->next = newNode;
+    }
+}
+
+void * popCurrent(List * list) {
+    if (list == NULL || list->current == NULL)
+        return NULL;
+
+    void *data = list->current->data;
+    Node *currentNode = list->current;
+
+    if (currentNode->prev != NULL) {
+        currentNode->prev->next = currentNode->next;
+    } else {
+        list->head = currentNode->next; // Si el current es la cabeza, actualizamos la cabeza
     }
 
-    list->current->next = newNode;
+    if (currentNode->next != NULL) {
+        currentNode->next->prev = currentNode->prev;
+    } else {
+        list->tail = currentNode->prev; // Si el current es la cola, actualizamos la cola
+    }
+
+    list->current = currentNode->next; // Actualizamos el current
+    free(currentNode);
+    return data;
 }
+
 
 
 void * popFront(List * list) {
@@ -159,31 +185,22 @@ void * popCurrent(List * list) {
         return NULL;
 
     void *data = list->current->data;
-
     Node *currentNode = list->current;
 
     if (currentNode->prev != NULL) {
         currentNode->prev->next = currentNode->next;
     } else {
-        list->head = currentNode->next; // Si el nodo actual es la cabeza, actualizamos la cabeza de la lista
-        if (list->head != NULL) {
-            list->head->prev = NULL;
-        }
+        list->head = currentNode->next; // Si el current es la cabeza, actualizamos la cabeza
     }
 
     if (currentNode->next != NULL) {
         currentNode->next->prev = currentNode->prev;
     } else {
-        list->tail = currentNode->prev; // Si el nodo actual es la cola, actualizamos la cola de la lista
-        if (list->tail != NULL) {
-            list->tail->next = NULL;
-        }
+        list->tail = currentNode->prev; // Si el current es la cola, actualizamos la cola
     }
 
-    list->current = currentNode->next; // Actualizamos el nodo actual
-
+    list->current = currentNode->next; // Actualizamos el current
     free(currentNode);
-
     return data;
 }
 
