@@ -154,16 +154,16 @@ void * popCurrent(List * list) {
     if (currentNode->prev != NULL) {
         currentNode->prev->next = currentNode->next;
     } else {
-        list->head = currentNode->next; // Si el current es la cabeza, actualizamos la cabeza
+        list->head = currentNode->next; 
     }
 
     if (currentNode->next != NULL) {
         currentNode->next->prev = currentNode->prev;
     } else {
-        list->tail = currentNode->prev; // Si el current es la cola, actualizamos la cola
+        list->tail = currentNode->prev; 
     }
 
-    list->current = currentNode->next; // Actualizamos el current
+    list->current = currentNode->next; 
     free(currentNode);
     return data;
 }
@@ -190,16 +190,16 @@ void * popCurrent(List * list) {
     if (currentNode->prev != NULL) {
         currentNode->prev->next = currentNode->next;
     } else {
-        list->head = currentNode->next; // Si el current es la cabeza, actualizamos la cabeza
+        list->head = currentNode->next; 
     }
 
     if (currentNode->next != NULL) {
         currentNode->next->prev = currentNode->prev;
     } else {
-        list->tail = currentNode->prev; // Si el current es la cola, actualizamos la cola
+        list->tail = currentNode->prev; 
     }
 
-    list->current = currentNode->next; // Actualizamos el current
+    list->current = currentNode->next; 
     free(currentNode);
     return data;
 }

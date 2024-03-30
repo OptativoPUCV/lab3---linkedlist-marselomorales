@@ -202,3 +202,21 @@ list.c:147:8: note: previous definition of ‘popCurrent’ with type ‘void *(
 cc1: all warnings being treated as errors
 Compilation failed
 b7d1d04
+Sat 30 Mar 2024 04:33:37 PM UTC: 
+ list.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+In file included from test.c:5:
+list.c: In function ‘pushBack’:
+list.c:119:9: error: unused variable ‘newNode’ [-Werror=unused-variable]
+  119 |   Node *newNode = (Node *)(malloc(sizeof(Node)));
+      |         ^~~~~~~
+list.c: At top level:
+list.c:183:8: error: redefinition of ‘popCurrent’
+  183 | void * popCurrent(List * list) {
+      |        ^~~~~~~~~~
+list.c:147:8: note: previous definition of ‘popCurrent’ with type ‘void *(List *)’ {aka ‘void *(struct List *)’}
+  147 | void * popCurrent(List * list) {
+      |        ^~~~~~~~~~
+cc1: all warnings being treated as errors
+Compilation failed
+959e621
