@@ -125,25 +125,19 @@ void pushBack(List * list, void * data)
 void pushCurrent(List * list, void * data) 
 {
     if (list->current == NULL) {
-        if (list->head == NULL) {
-            pushFront(list, data); // Si la lista está vacía, agregamos el nuevo nodo como el único nodo en la lista
-        } else {
-            list->current = list->tail; // Si el nodo actual es NULL, pero la lista no está vacía, movemos el nodo actual al último nodo
-            pushBack(list, data); // y luego agregamos el nuevo nodo como el siguiente al último nodo
-        }
+        pushFront(list, data); // Si el nodo actual es NULL, agregamos el nuevo nodo al frente de la lista
     } else {
-        Node *newNode = (Node *)malloc(sizeof(Node));
-        newNode->data = data;
-        newNode->next = list->current->next;
-        newNode->prev = list->current;
-
-        if (list->current->next != NULL) {
-            list->current->next->prev = newNode;
+        if (list->current == list->tail) {
+            pushBack(list, data); // Si el nodo actual es el último nodo, agregamos el nuevo nodo al final de la lista
         } else {
-            list->tail = newNode; // Si el nodo actual es el último nodo, actualizamos la cola de la lista
-        }
+            Node *newNode = (Node *)malloc(sizeof(Node));
+            newNode->data = data;
+            newNode->next = list->current->next;
+            newNode->prev = list->current;
 
-        list->current->next = newNode;
+            list->current->next->prev = newNode;
+            list->current->next = newNode;
+        }
     }
 }
 
