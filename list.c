@@ -120,7 +120,7 @@ void pushBack(List * list, void * data)
         return;
 
     if (list->tail == NULL) {
-        pushFront(list, data); // Si la lista está vacía, agregamos al principio
+        pushFront(list, data); 
         return;
     }
 
@@ -173,16 +173,16 @@ void * popCurrent(List * list) {
     if (currentNode->prev != NULL) {
         currentNode->prev->next = currentNode->next;
     } else {
-        list->head = currentNode->next; // Si el current es la cabeza, actualizamos la cabeza
+        list->head = currentNode->next; 
     }
 
     if (currentNode->next != NULL) {
         currentNode->next->prev = currentNode->prev;
     } else {
-        list->tail = currentNode->prev; // Si el current es la cola, actualizamos la cola
+        list->tail = currentNode->prev; 
     }
 
-    list->current = currentNode->next; // Actualizamos el current
+    list->current = currentNode->next; 
     free(currentNode);
     return data;
 }
