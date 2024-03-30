@@ -137,12 +137,11 @@ void pushCurrent(List * list, void * data)
     if (list->current->next != NULL) {
         list->current->next->prev = newNode;
     } else {
-        list->tail = newNode;
+        list->tail = newNode; 
     }
 
     list->current->next = newNode;
 }
-
 
 
 void * popFront(List * list) {
@@ -163,12 +162,6 @@ void * popCurrent(List * list) {
 
     Node *currentNode = list->current;
 
-    if (list->current->next != NULL) {
-        list->current = list->current->next;
-    } else {
-        list->current = NULL;
-    }
-
     if (currentNode->prev != NULL) {
         currentNode->prev->next = currentNode->next;
     } else {
@@ -181,16 +174,16 @@ void * popCurrent(List * list) {
     if (currentNode->next != NULL) {
         currentNode->next->prev = currentNode->prev;
     } else {
-        list->tail = currentNode->prev;
-        if (list->tail != NULL) {
-            list->tail->next = NULL;
-        }
+        list->tail = currentNode->prev; // Actualizamos la cola si el nodo actual es el último nodo
     }
+
+    list->current = currentNode->next; // Actualizamos el nodo actual
 
     free(currentNode);
 
     return data;
 }
+
 
 
 
